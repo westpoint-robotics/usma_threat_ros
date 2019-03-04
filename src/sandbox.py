@@ -18,3 +18,9 @@ gun_boxes = []
 human_boxes = []
 
 
+human_boxes.append({'xmin':random.randint(1,101),'ymin':random.randint(1,101),'xmax':random.randint(1,101),'ymax':random.randint(1,101)})
+human_boxes.append({'xmin':random.randint(1,101),'ymin':random.randint(1,101),'xmax':random.randint(1,101),'ymax':random.randint(1,101)})
+human_boxes.append({'xmin':random.randint(1,101),'ymin':random.randint(1,101),'xmax':random.randint(1,101),'ymax':random.randint(1,101)})
+human_boxes.append({'xmin':random.randint(1,101),'ymin':random.randint(1,101),'xmax':random.randint(1,101),'ymax':random.randint(1,101)})
+
+
