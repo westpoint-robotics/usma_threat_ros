@@ -1,21 +1,5 @@
 <launch>
-    <!-- Launch arguments -->
-    <arg name="network"         default="linksys" /> 
-    <arg name="server_ip"       default="192.168.0.5" /> 
-    <arg name="ardrone_ip"      default="192.168.0.25" /> <!-- need to check IP address each time -->
-
     <arg name="boxes_topic"     default="/darknet_ros/bounding_boxes"/>
-
-
-    <!-- ardrone driver !!! need to send takeoff and land commands separately -->
-    <include file="$(find optitrack_controller)/launch/ardrone_driver_$(arg network).launch">
-        <arg name="ip"          value="$(arg ardrone_ip)"/>
-        <arg name="echo"        value="false" />
-        <arg name="cmd_topic"   value="ardrone/switched/cmd_vel"/>
-    </include>
-
-    <!-- Start the node to run darknet ros -->
-    <include file="$(find darknet_ros)/launch/yolo_v3.launch"/>
 
     <!-- Start the node to evaluate bounding boxes   -->
     <node pkg="usma_threat_ros" type="evaluator.py" name="threat_evaluator" output="screen" >
