@@ -1,9 +1,22 @@
 <launch>
-    <arg name="boxes_topic"     default="/darknet_ros/bounding_boxes"/>
+	<arg name="boxes_topic"		default="/darknet_ros/bounding_boxes"/>
+	<arg name="srcimg_topic"	default="/ardrone/front/image_rect_color"/>
+	<arg name="threat_image_topic"	default="/threats/potential images"/>
 
-    <!-- Start the node to evaluate bounding boxes   -->
-    <node pkg="usma_threat_ros" type="evaluator.py" name="threat_evaluator" output="screen" >
-        <param name="/boxes_topic" value="$(arg boxes_topic)" />
-    </node>
+	<!-- Start the node to evaluate bounding boxes   -->
+	<node pkg="usma_threat_ros" type="evaluator.py" name="threat_evaluator" output="screen" >
+		<param name="yolo_boxes_topic" 	value="$(arg boxes_topic)" />
+		<param name="srcimg_topic"			value="$(arg srcimg_topic)" />
+		<param name="threat_image"			value="$(arg threat_image_topic)" />
+	</node>
+
+	<include file="$(find usma_threat_ros)/launch/ardrone.launch">
+		<arg name="called"	value="true" />
+	</include>
+
+	<include file="$(find stop)/launch/stop.launch">
+		<arg name="launcher"	value="evaluator_stopper" />
+	</include>
+
 
 </launch>

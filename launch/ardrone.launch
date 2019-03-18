@@ -1,4 +1,5 @@
 <launch>
+    <arg name="called"         default="false" /> 
     <!-- Launch arguments -->
     <arg name="network"         default="linksys" /> 
     <arg name="server_ip"       default="192.168.0.5" /> 
@@ -16,5 +17,13 @@
 
     <!-- Start the node to run darknet ros -->
     <include file="$(find darknet_ros)/launch/yolo_v3.launch"/>
+
+    
+
+    <group if="$(arg called)">
+        <include file="$(find stop)/launch/stop.launch">
+            <arg name="launcher"        value="ardrone_stopper" />
+        </include>
+    </group>    
 
 </launch>
