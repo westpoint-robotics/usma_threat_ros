@@ -7,8 +7,13 @@
 	<node pkg="usma_threat_ros" type="evaluator.py" name="threat_evaluator" output="screen" >
 		<param name="yolo_boxes_topic" 	value="$(arg boxes_topic)" />
 		<param name="srcimg_topic"			value="$(arg srcimg_topic)" />
-		<param name="threat_image"			value="$(arg threat_image_topic)" />
+		<param name="threat_images"			value="$(arg threat_image_topic)" />
 	</node>
+
+	<node pkg="usma_threat_ros" type="skeleton_detector.py" name="skeleton_detector" output="screen" >
+		<param name="threat_images"			value="$(arg threat_image_topic)" />
+	</node>
+
 
 	<include file="$(find usma_threat_ros)/launch/ardrone.launch">
 		<arg name="called"	value="true" />
