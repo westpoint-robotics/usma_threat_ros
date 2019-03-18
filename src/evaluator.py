@@ -5,14 +5,10 @@ import math
 import sys
 import rospy
 import cv2
-
 from usma_threat_ros.msg import ImageArray
 from darknet_ros_msgs.msg import BoundingBox, BoundingBoxes
 from sensor_msgs.msg import Image
 from cv_bridge import CvBridge, CvBridgeError
-
-
-
 import time
 import tf
 
@@ -38,14 +34,6 @@ class box_evaluator():
         self.srcimg_topic = rospy.get_param("~srcimg_topic","/ardrone/front/image_rect_color")
         self.srcimg_sub = rospy.Subscriber(self.srcimg_topic,Image,self.updateimage)
 
-        # self.threatbox_pub = rospy.Publisher("threats",Image)
-
-
-
-        # /ardrone/front/image_rect_color
-
-        # self.bboxes = {self.human_type:[], self.gun_type:[]}
-
     def updateimage(self,msg):
         try:
             self.cv_image = self.bridge.imgmsg_to_cv2(msg, "bgr8")
@@ -58,8 +46,6 @@ class box_evaluator():
             self.msg_time = msg.header.stamp.to_sec()
             self.msg_seq += 1
             self.yolo_box_data = msg.bounding_boxes
-            # print("bounding_boxes: {} ").format(self.yolo_box_data) 
-            
 
             # self.bboxes = {self.human_type:[], self.gun_type:[]}
             self.gun_boxes = []
@@ -73,15 +59,11 @@ class box_evaluator():
                 if box.Class == self.gun_type:
                     self.gun_boxes.append({'xmin':box.xmin,'ymin':box.ymin,'xmax':box.xmax,'ymax':box.ymax})
 
-            # Now loop over bboxes to see if any guns and people overlap
+        # Now loop over bboxes to see if any guns and people overlap
         for person_box in self.human_boxes:
             for gun_box in self.gun_boxes:
-                # print("\n")
-                # print("person_box, xmin:[{}], xmax:[{}], ymin:[{}], ymax:[{}] ").format(person_box["xmin"], person_box["xmax"], person_box["ymin"], person_box["ymax"]) 
-                # print("gun_box, xmin:[{}], xmax:[{}], ymin:[{}], ymax:[{}] ").format(gun_box["xmin"], gun_box["xmax"], gun_box["ymin"], gun_box["ymax"]) 
                 if self.box_overlap(person_box, gun_box):
                     self.potential_threats.append(person_box)
-                # to get here, there must be both a gun and a person present in the frame
         
         if self.image_rx:
             self.potential_threats_imgs = ImageArray()
@@ -104,8 +86,6 @@ class box_evaluator():
         # Neither range is completely greater than the other
         return (a_min <= b_max) and (b_min <= a_max)
 
-
-
 if __name__ == '__main__':
     # Initialize the node and name it.
     rospy.init_node('evaluator')
@@ -117,61 +97,3 @@ if __name__ == '__main__':
     rate = rospy.Rate(30) # 30hz
     while not rospy.is_shutdown():
         rate.sleep()
-
-
-
-# ---
-# header: 
-#   seq: 272
-#   stamp: 
-#     secs: 1551282971
-#     nsecs: 767909442
-#   frame_id: "detection"
-# image_header: 
-#   seq: 1902
-#   stamp: 
-#     secs: 1551282971
-#     nsecs: 477133782
-#   frame_id: "ardrone_autonomy/ardrone_base_frontcam"
-# bounding_boxes: 
-#   - 
-#     Class: "person"
-#     probability: 0.912685096264
-#     xmin: 335
-#     ymin: 126
-#     xmax: 608
-#     ymax: 355
-#   - 
-#     Class: "cell phone"
-#     probability: 0.954342365265
-#     xmin: 310
-#     ymin: 27
-#     xmax: 490
-#     ymax: 268
-# ---
-
-
-
-
-# struct rect
-# {
-#     int x;
-#     int y;
-#     int width;
-#     int height;
-# };
-
-# bool valueInRange(int value, int min, int max)
-# { return (value >= min) && (value <= max); }
-
-# bool rectOverlap(rect A, rect B)
-# {
-#     bool xOverlap = valueInRange(A.x, B.x, B.x + B.width) ||
-#                     valueInRange(B.x, A.x, A.x + A.width);
-
-#     bool yOverlap = valueInRange(A.y, B.y, B.y + B.height) ||
-#                     valueInRange(B.y, A.y, A.y + A.height);
-
-#     return xOverlap && yOverlap;
-# }
-
