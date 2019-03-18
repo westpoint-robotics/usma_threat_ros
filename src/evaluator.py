@@ -34,6 +34,10 @@ class box_evaluator():
         self.srcimg_topic = rospy.get_param("~srcimg_topic","/ardrone/front/image_rect_color")
         self.srcimg_sub = rospy.Subscriber(self.srcimg_topic,Image,self.updateimage)
 
+        
+        self.threat_img_topic = rospy.get_param("~threat_image_topic","/threats/potential_images")
+        self.threat_img_pub = rospy.Publisher(self.threat_img_topic, ImageArray, queue_size=10)
+
     def updateimage(self,msg):
         try:
             self.cv_image = self.bridge.imgmsg_to_cv2(msg, "bgr8")
@@ -75,6 +79,8 @@ class box_evaluator():
                 crop_img = self.cv_image[person_box["ymin"]:person_box["ymax"],  person_box["xmin"]:person_box["xmax"]]
                 self.potential_threats_imgs.images.append(self.bridge.cv2_to_imgmsg(crop_img, "bgr8"))
                 i += 1
+
+            self.threat_img_pub.publish(self.potential_threats_imgs)
 
     def box_overlap(self, human_box, gun_box):
         # Overlapping rectangles overlap both horizontally & vertically

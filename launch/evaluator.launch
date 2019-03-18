@@ -1,7 +1,15 @@
 <launch>
-	<arg name="boxes_topic"		default="/darknet_ros/bounding_boxes"/>
-	<arg name="srcimg_topic"	default="/ardrone/front/image_rect_color"/>
-	<arg name="threat_image_topic"	default="/threats/potential images"/>
+	<arg name="boxes_topic"					default="/darknet_ros/bounding_boxes"/>
+	<arg name="srcimg_topic"				default="/ardrone/front/image_rect_color"/>
+	<arg name="threat_image_topic"	default="/threats/potential_images"/>
+
+	<include file="$(find stop)/launch/stop.launch">
+		<arg name="launcher"	value="evaluator_stopper" />
+	</include>
+
+	<include file="$(find usma_threat_ros)/launch/ardrone.launch">
+		<arg name="called"	value="true" />
+	</include>
 
 	<!-- Start the node to evaluate bounding boxes   -->
 	<node pkg="usma_threat_ros" type="evaluator.py" name="threat_evaluator" output="screen" >
@@ -10,18 +18,12 @@
 		<param name="threat_images"			value="$(arg threat_image_topic)" />
 	</node>
 
-	<node pkg="usma_threat_ros" type="skeleton_detector.py" name="skeleton_detector" output="screen" >
-		<param name="threat_images"			value="$(arg threat_image_topic)" />
+	<!-- Start the node to calculate skeletons   -->
+<!-- 	<node pkg="usma_threat_ros" type="skeleton_detector.py" name="skeleton_detector" output="screen" >
+		<param name="threat_images"		value="$(arg threat_image_topic)" />
+		<param name="protoFile"				value="$(arg protoFile)" />
+		<param name="weightsFile"			value="$(arg weightsFile)" />
 	</node>
-
-
-	<include file="$(find usma_threat_ros)/launch/ardrone.launch">
-		<arg name="called"	value="true" />
-	</include>
-
-	<include file="$(find stop)/launch/stop.launch">
-		<arg name="launcher"	value="evaluator_stopper" />
-	</include>
-
+ -->
 
 </launch>
