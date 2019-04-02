@@ -22,7 +22,7 @@ class box_evaluator():
         self.msg_seq = 0
         self.msg_time = 0
         self.human_type = "person"
-        self.gun_type = "tvmonitor"
+        self.gun_type = "backpack"
 
         self.gun_boxes = []
         self.human_boxes = []

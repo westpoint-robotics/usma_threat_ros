@@ -4,8 +4,8 @@
 	<arg name="threat_image_topic"	default="/threats/potential_images"/>
 
 
-	<arg name="protoFile"			default="$(find usma_threat_ros)/cfg/coco/pose_deploy_linevec.prototxt"/>
-	<arg name="weightsFile"		default="$(find usma_threat_ros)/cfg/coco/pose_iter_440000.caffemodel"/>
+	<arg name="protoFile"			default="$(find usma_threat_ros)/cfg/models/coco/pose_deploy_linevec.prototxt"/>
+	<arg name="weightsFile"		default="$(find usma_threat_ros)/cfg/models/coco/pose_iter_440000.caffemodel"/>
 	
 	<!-- Start the node to evaluate bounding boxes   -->
 	<node pkg="usma_threat_ros" type="skeleton_detector.py" name="skeleton_detector" output="screen" >
