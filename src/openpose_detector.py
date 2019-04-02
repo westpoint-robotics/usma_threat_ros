@@ -57,8 +57,13 @@ class openpose_detector():
 
                 self.datum.cvInputData = image
                 self.opWrapper.emplaceAndPop([self.datum])
-                cv2.imshow("detected skeleton {}".format(i), self.datum.cvOutputData)
-                cv2.waitKey(1)
+
+                imagename_i = "detected skeleton {}".format(i)
+
+                cv2.namedWindow(imagename_i, cv2.WINDOW_NORMAL)
+                cv2.imshow(imagename_i, self.datum.cvOutputData)
+                cv2.resizeWindow(imagename_i, image.shape[0]*4,image.shape[0]*4)
+                cv2.waitKey(25)
                 i+=1
 
             #do something with skeleton lists
