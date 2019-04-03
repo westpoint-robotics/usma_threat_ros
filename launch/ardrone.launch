@@ -15,11 +15,6 @@
         <arg name="cmd_topic"   value="ardrone/switched/cmd_vel"/>
     </include>
 
-    <!-- Start the node to run darknet ros -->
-    <include file="$(find darknet_ros)/launch/yolo_v3.launch"/>
-
-    
-
     <group if="$(arg called)">
         <include file="$(find stop)/launch/stop.launch">
             <arg name="launcher"        value="ardrone_stopper" />
