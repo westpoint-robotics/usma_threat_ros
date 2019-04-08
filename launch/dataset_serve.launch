@@ -1,0 +1,29 @@
+<launch>
+	<arg name="dataset_path"						default="/home/benjamin/datasets/test/" />
+	<arg name="dataset_load_topic"			default="/usma_threat/load_dataset" />
+	<arg name="request_image_topic"			default="/usma_threat/request_image" />
+	<arg name="dataset_img_pub_topic"		default="/usma_threat/served_image" />
+
+	<include file="$(find stop)/launch/stop.launch">
+		<arg name="launcher"					value="dataset_serve_stopper" />
+	</include>
+
+	<!-- Start the node to load and serve images   -->
+	<node pkg="usma_threat_ros" type="dataset_serve.py" name="dataset_serve" output="screen" >
+		<param name="dataset_load_topic" 			value="$(arg dataset_load_topic)" />
+		<param name="request_image_topic" 		value="$(arg request_image_topic)" />
+		<param name="dataset_img_pub_topic" 	value="$(arg dataset_img_pub_topic)" />
+	</node>
+
+  <!-- Start the node to run darknet ros -->
+  <!-- <include file="$(find darknet_ros)/launch/yolo_v3.launch"/> -->
+  <include file="$(find usma_threat_ros)/launch/yolo.launch">
+		<arg name="yolo_weights_path"   value="$(find usma_threat_ros)/cfg/weights"/>
+		<arg name="yolo_config_path"    value="$(find usma_threat_ros)/cfg/models"/>
+		<arg name="yolo_param_path"     value="$(find usma_threat_ros)/cfg/pistol-yolov3-tiny.yaml"/>
+		<arg name="ros_param_path"      value="$(find usma_threat_ros)/cfg/dataset_ros.yaml"/>
+		<arg name="launcher" 			      value="yolo_pistols" />
+  </include>
+
+
+</launch>

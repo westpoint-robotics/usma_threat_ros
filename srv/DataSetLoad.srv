@@ -1,0 +1,3 @@
+std_msgs/String path 		# path of images requested
+---
+uint32 length 					# number of images in folder to load

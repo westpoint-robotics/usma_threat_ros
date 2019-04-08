@@ -15,14 +15,14 @@ import tf
 class box_evaluator():
     # Must have __init__(self) function for a class, similar to a C++ class constructor.
     def __init__(self):
-        # matlab config
+        # ros config
         self.yolo_boxes_topic = rospy.get_param("~yolo_boxes_topic","/darknet_ros/bounding_boxes")
         self.yolo_boxes_sub = rospy.Subscriber(self.yolo_boxes_topic,BoundingBoxes,self.yolo_boxes)
         self.yolo_boxes_list = []
         self.msg_seq = 0
         self.msg_time = 0
         self.human_type = "person"
-        self.gun_type = "backpack"
+        self.gun_type = "pistol"
 
         self.gun_boxes = []
         self.human_boxes = []

@@ -1,0 +1,19 @@
+<launch>
+	<arg name="boxes_topic"							default="/darknet_ros/bounding_boxes"/>
+	<arg name="dataset_path"						default="/home/benjamin/datasets/test/" />
+	<arg name="dataset_load_topic"			default="/usma_threat/load_dataset" />
+	<arg name="request_image_topic"			default="/usma_threat/request_image" />
+	<arg name="dataset_img_pub_topic"		default="/usma_threat/served_image" />
+
+
+	<!-- Start the node to request dataset of images to load   -->
+	<node pkg="usma_threat_ros" type="dataset_process.py" name="dataset_process" output="screen"  required="true">
+		<param name="dataset_path" 						value="$(arg dataset_path)" />
+		<param name="dataset_load_topic" 			value="$(arg dataset_load_topic)" />
+		<param name="request_image_topic" 		value="$(arg request_image_topic)" />
+		<param name="dataset_img_pub_topic" 	value="$(arg dataset_img_pub_topic)" />
+	</node>
+
+
+
+</launch>

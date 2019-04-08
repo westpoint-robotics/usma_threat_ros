@@ -1,0 +1,5 @@
+uint32 id 							# serial number of image requested
+---
+#sensor_msgs/Image image # image to process
+#bool eof  							# end of dataset folder
+bool return 						# service response bit

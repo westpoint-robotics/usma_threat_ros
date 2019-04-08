@@ -3,7 +3,6 @@
 	<arg name="srcimg_topic"				default="/ardrone/front/image_rect_color"/>
 	<arg name="threat_image_topic"	default="/threats/potential_images"/>
 
-
 	<arg name="protoFile"			default="$(find usma_threat_ros)/cfg/models/coco/pose_deploy_linevec.prototxt"/>
 	<arg name="weightsFile"		default="$(find usma_threat_ros)/cfg/models/coco/pose_iter_440000.caffemodel"/>
 	
