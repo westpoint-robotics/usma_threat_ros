@@ -1,6 +1,5 @@
 <launch>
 	<arg name="threat_image_topic"	default="/threats/potential_images"/>
-
 	<arg name="model_folder_path" default="$(find usma_threat_ros)/cfg/models/"/>
 	
 	<!-- Start the node to evaluate bounding boxes   -->

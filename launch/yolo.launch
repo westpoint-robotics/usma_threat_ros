@@ -2,6 +2,7 @@
     <arg name="called"         default="false" /> 
     <!-- Launch arguments -->
     <arg name="network"         default="linksys" /> 
+    <arg name="launcher"        default="yolo" /> 
 
     <arg name="yolo_weights_path"   default="$(find darknet_ros)/yolo_network_config/weights"/>
     <arg name="yolo_config_path"    default="$(find darknet_ros)/yolo_network_config/cfg"/>
@@ -18,7 +19,7 @@
 
     <group if="$(arg called)">
         <include file="$(find stop)/launch/stop.launch">
-            <arg name="launcher"        value="yolo_stopper" />
+            <arg name="launcher"          value="$(arg launcher)_stopper" />
         </include>
     </group>    
 

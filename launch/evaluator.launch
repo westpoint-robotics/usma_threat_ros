@@ -11,6 +11,15 @@
 		<arg name="called"	value="true" />
 	</include>
 
+  <!-- Start the node to run darknet ros -->
+  <include file="$(find usma_threat_ros)/launch/yolo.launch">
+		<arg name="yolo_weights_path"   value="$(find usma_threat_ros)/cfg/weights"/>
+		<arg name="yolo_config_path"    value="$(find usma_threat_ros)/cfg/models"/>
+		<arg name="yolo_param_path"     value="$(find usma_threat_ros)/cfg/pistol-yolov3-tiny.yaml"/>
+		<arg name="ros_param_path"      value="$(find usma_threat_ros)/cfg/ros.yaml"/>
+		<arg name="launcher" 			      value="yolo_pistols" />
+  </include>
+
 	<!-- Start the node to evaluate bounding boxes   -->
 	<node pkg="usma_threat_ros" type="evaluator.py" name="threat_evaluator" output="screen" >
 		<param name="yolo_boxes_topic" 	value="$(arg boxes_topic)" />
