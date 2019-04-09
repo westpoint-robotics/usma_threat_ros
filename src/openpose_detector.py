@@ -21,7 +21,6 @@ import tf
 sys.path.append('/usr/local/python')
 from openpose import pyopenpose as op
 
-
 class openpose_detector():
     # Must have __init__(self) function for a class, similar to a C++ class constructor.
     def __init__(self):

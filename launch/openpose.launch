@@ -6,6 +6,7 @@
 	<node pkg="usma_threat_ros" type="openpose_detector.py" name="openpose_detector" output="screen" >
 		<param name="threat_images"				value="$(arg threat_image_topic)" />
 		<param name="model_folder_path"		value="$(arg model_folder_path)" />
+    <param name="test_string"   value="passed" />
 	</node>
 
 	<include file="$(find stop)/launch/stop.launch">

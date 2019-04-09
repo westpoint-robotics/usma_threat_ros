@@ -1,13 +1,12 @@
-import pdb
 import shutil
 import numpy as np
 import cv2
 import os,sys
 import time
 
-sys.path.append('/usr/local/python')
-sys.path.append('/home/benjamin/ros/src/darknet_ros/darknet')
-sys.path.append('/home/benjamin/ros/src/darknet_ros/darknet/python')
+sys.path.append('/usr/local/python') # path for CMUopenpose library
+sys.path.append(os.environ['DARKNET_PATH']) 
+sys.path.append(os.environ['DARKNET_PATH']+'/python')
 
 import darknet as dn
 
