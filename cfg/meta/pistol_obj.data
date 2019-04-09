@@ -1,5 +1,0 @@
-classes = 2
-train = pistol_train.txt
-valid = pistol_train.txt
-names = data/coco.names
-backup = backup/

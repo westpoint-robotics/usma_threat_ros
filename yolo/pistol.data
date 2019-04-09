@@ -1,0 +1,5 @@
+classes = 2
+train = train.txt
+test = test.txt
+names = /home/benjamin/ros/src/usma_threat_ros/yolo/pistol.names
+backup = backup/

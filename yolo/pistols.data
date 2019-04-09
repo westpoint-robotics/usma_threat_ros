@@ -1,5 +1,0 @@
-classes = 2
-train = pistol_train.txt
-valid = pistol_train.txt
-names = /home/benjamin/ros/src/usma_threat_ros/yolo/pistols.names
-backup = backup/
