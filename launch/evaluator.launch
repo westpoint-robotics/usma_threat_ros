@@ -12,7 +12,7 @@
 	</include>
 
   <!-- Start the node to run darknet ros -->
-  <include file="$(find usma_threat_ros)/launch/yolo.launch">
+  <include file="$(find usma_threat_ros)/launch/darknet_ros_yolo_v3.launch">
 		<arg name="yolo_weights_path"   value="$(find usma_threat_ros)/cfg/weights"/>
 		<arg name="yolo_config_path"    value="$(find usma_threat_ros)/cfg/models"/>
 		<arg name="yolo_param_path"     value="$(find usma_threat_ros)/cfg/pistol-yolov3-tiny.yaml"/>

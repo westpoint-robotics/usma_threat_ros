@@ -1,0 +1,16 @@
+darknet_yolo:
+  cfg: /home/benjamin/ros/src/usma_threat_ros/yolo/pistol-tiny.cfg
+  data: /home/benjamin/ros/src/usma_threat_ros/yolo/pistol.data
+  weights: /home/benjamin/ros/src/usma_threat_ros/yolo/pistol-tiny_last.weights
+
+subscribers:
+  image:
+    topic: /ardrone/front/image_rect_color
+
+publishers:
+  bounding_boxes:
+    topic: /darknet_ros/bounding_boxes
+  detection_image:
+    topic: /darknet_ros/detection_image
+
+
