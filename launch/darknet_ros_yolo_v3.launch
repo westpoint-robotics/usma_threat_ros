@@ -1,26 +1,26 @@
 <launch>
-    <arg name="called"         default="false" /> 
-    <!-- Launch arguments -->
-    <arg name="network"         default="linksys" /> 
-    <arg name="launcher"        default="yolo" /> 
+	<!-- Launch arguments -->
+	<arg name="called"		default="false" /> 
+	<arg name="launcher"  default="yolo" /> 
+	<arg name="network"   default="linksys" /> 
 
-    <arg name="yolo_weights_path"   default="$(find darknet_ros)/yolo_network_config/weights"/>
-    <arg name="yolo_config_path"    default="$(find darknet_ros)/yolo_network_config/cfg"/>
-    <arg name="yolo_param_path"     default="$(find darknet_ros)/config/yolov3.yaml"/>
-    <arg name="ros_param_path"      default="$(find darknet_ros)/config/ros.yaml"/>
+	<arg name="yolo_weights_path"   default="$(find darknet_ros)/yolo_network_config/weights"/>
+	<arg name="yolo_config_path"    default="$(find darknet_ros)/yolo_network_config/cfg"/>
+	<arg name="yolo_param_path"     default="$(find darknet_ros)/config/yolov3.yaml"/>
+	<arg name="ros_param_path"      default="$(find darknet_ros)/config/ros.yaml"/>
 
-    <!-- Start the node to run darknet ros -->
-    <include file="$(find darknet_ros)/launch/yolo_v3.launch">
-          <arg name="yolo_weights_path"   value="$(arg yolo_weights_path)" />
-          <arg name="yolo_config_path"    value="$(arg yolo_config_path)" />
-          <arg name="yolo_param_path"     value="$(arg yolo_param_path)" />
-          <arg name="ros_param_path"      value="$(arg ros_param_path)" />
-    </include>
+	<!-- Start the node to run darknet ros -->
+	<include file="$(find darknet_ros)/launch/yolo_v3.launch">
+		<arg name="yolo_weights_path"   value="$(arg yolo_weights_path)" />
+		<arg name="yolo_config_path"    value="$(arg yolo_config_path)" />
+		<arg name="yolo_param_path"     value="$(arg yolo_param_path)" />
+		<arg name="ros_param_path"      value="$(arg ros_param_path)" />
+	</include>
 
-    <group if="$(arg called)">
-        <include file="$(find stop)/launch/stop.launch">
-            <arg name="launcher"          value="$(arg launcher)_stopper" />
-        </include>
-    </group>    
+	<group if="$(arg called)">
+		<include file="$(find stop)/launch/stop.launch">
+			<arg name="launcher"          value="$(arg launcher)_stopper" />
+		</include>
+	</group>    
 
 </launch>

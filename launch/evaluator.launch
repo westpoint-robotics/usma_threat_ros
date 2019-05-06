@@ -1,15 +1,21 @@
 <launch>
 	<arg name="boxes_topic"					default="/darknet_ros/bounding_boxes"/>
-	<arg name="srcimg_topic"				default="/ardrone/front/image_rect_color"/>
+	<arg name="srcimg_topic"				default="/logitech/image_raw"/>
+	<!-- <arg name="srcimg_topic"				default="/ardrone/front/image_rect_color"/> -->
 	<arg name="threat_image_topic"	default="/threats/potential_images"/>
 
 	<include file="$(find stop)/launch/stop.launch">
 		<arg name="launcher"	value="evaluator_stopper" />
 	</include>
 
-	<include file="$(find usma_threat_ros)/launch/ardrone.launch">
-		<arg name="called"	value="true" />
+	<!-- <include file="$(find usma_threat_ros)/launch/ardrone.launch"> -->
+		<!-- <arg name="called"	value="true" /> -->
+	<!-- </include> -->
+
+	<include file="$(find usma_threat_ros)/launch/logitech.launch">
+		<arg name="video_mode"	value="yuyv" />
 	</include>
+
 
   <!-- Start the node to run darknet ros -->
   <include file="$(find usma_threat_ros)/launch/darknet_ros_yolo_v3.launch">

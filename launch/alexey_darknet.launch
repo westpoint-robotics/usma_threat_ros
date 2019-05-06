@@ -1,9 +1,8 @@
 <launch>
 	<!-- Launch arguments -->
-	<arg name="called"		default="false" /> 
+	<arg name="called"			default="false" /> 
 	<arg name="launcher"		default="yolo" /> 
-	<arg name="ros_params"				default="$(find usma_threat_ros)/yolo/ros.yaml"/>
-
+	<arg name="ros_params"	default="$(find usma_threat_ros)/yolo/ros.yaml"/>
 
 	<!-- Start the node to run darknet ros -->
 	<node pkg="usma_threat_ros" type="alexey_darknet.py" name="alexey_darknet" output="screen" >
@@ -14,11 +13,10 @@
 		<arg name="launcher"	value="yolo" />
 	</include>
 
-
-    <group if="$(arg called)">
-        <include file="$(find stop)/launch/stop.launch">
-            <arg name="launcher"          value="$(arg launcher)_stopper" />
-        </include>
-    </group>    
+	<group if="$(arg called)">
+		<include file="$(find stop)/launch/stop.launch">
+			<arg name="launcher"          value="$(arg launcher)_stopper" />
+		</include>
+	</group>    
 
 </launch>

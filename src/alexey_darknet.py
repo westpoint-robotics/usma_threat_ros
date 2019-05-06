@@ -110,23 +110,3 @@ if __name__ == '__main__':
 	while not rospy.is_shutdown():
 		rate.sleep()
 
-
-
-
-
-# # image array config
-# self.bridge = CvBridge()
-# self.threat_boxes_topic = rospy.get_param("~threat_image_topic","/threats/potential_images")
-# self.threat_boxes_sub = rospy.Subscriber(self.threat_boxes_topic,ImageArray,self.threat_boxes)
-# self.msg_seq = 0
-# self.msg_time = 0
-# self.skeletons = []
-
-# # openpose config
-# self.params = dict()
-# self.params["model_folder"] = rospy.get_param("~model_folder_path","/cfg/models/")
-# self.opWrapper = op.WrapperPython()
-# self.opWrapper.configure(self.params)
-# self.opWrapper.start()
-# self.datum = op.Datum()
-
