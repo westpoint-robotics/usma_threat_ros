@@ -1,8 +1,8 @@
 Setting up the package
 =======
 
-	git init
-	git remote add gh git@github.com:westpoint-robotics/usma_ardrone.git
+	mkdir -p ~/ros/src/usma_threat_ros && cd ~/ros/src/usma_threat && git init
+	git remote add gh git@github.com:westpoint-robotics/usma_threat_ros.git && git pull gh master
 
 Weights files can be downloaded from here: 
 
