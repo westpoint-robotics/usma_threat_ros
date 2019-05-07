@@ -60,24 +60,34 @@ class yolo_darknet():
 		dn.copy_image_from_bytes(darknet_image,frame_resized.tobytes())
 		self.detections = dn.detect_image(self.net, self.meta, darknet_image, thresh=0.25)
 
+		height_scale = float(self.cv_image.shape[0]) / dn.network_height(self.net)
+		width_scale = float(self.cv_image.shape[1]) / dn.network_height(self.net)
+
 		self.bounding_boxes_msg = BoundingBoxes()
 		box_i = 0
 		for detection in self.detections:
 			if (detection[0] == "pistol"):
-				print("detection: {}").format(detection)
+				box_color = (255,0,0)
+			if (detection[0] == "person"):
+				box_color = (0,0,255)
+
 			box = BoundingBox()
 			box.Class = detection[0]
 			box.probability = detection[1]
 			bounds = detection[2]
-			box.xmin = int(bounds[0] - bounds[2]/2)
-			box.ymin = int(bounds[1] - bounds[3]/2)
-			box.xmax = int(bounds[0] + bounds[2]/2)
-			box.ymax = int(bounds[1] + bounds[3]/2)
-			box_color = (0,255,0)
-			cv2.rectangle(frame_resized,(box.xmin,box.ymin),(box.xmax, box.ymax),box_color,2)
+			box.xmin = (bounds[0] - bounds[2]/2)
+			box.ymin = (bounds[1] - bounds[3]/2)
+			box.xmax = (bounds[0] + bounds[2]/2)
+			box.ymax = (bounds[1] + bounds[3]/2)
+			cv2.rectangle(frame_resized,(int(box.xmin),int(box.ymin)),(int(box.xmax),int(box.ymax)),box_color,2)
+			box.xmin *= width_scale
+			box.ymin *= height_scale
+			box.xmax *= width_scale
+			box.ymax *= height_scale
 			self.bounding_boxes_msg.bounding_box.append(box)
 
 		self.publish_boxes_array()
+		# this publishes the image with bounding boxes
 		self.publish_image_with_boxes(cv2.resize(frame_resized,(self.cv_image.shape[1], self.cv_image.shape[0]),interpolation=cv2.INTER_LINEAR)	)
 
 	def publish_boxes_array(self):
