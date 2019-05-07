@@ -9,14 +9,19 @@
 		<rosparam 	command="load" 	file="$(arg ros_params)" />
 	</node>
 
-	<include file="$(find stop)/launch/stop.launch">
+<!-- 	<include file="$(find stop)/launch/stop.launch">
 		<arg name="launcher"	value="yolo" />
-	</include>
+	</include> -->
 
-	<group if="$(arg called)">
+<!-- 	<group if="$(arg called)">
 		<include file="$(find stop)/launch/stop.launch">
 			<arg name="launcher"          value="$(arg launcher)_stopper" />
 		</include>
-	</group>    
+	</group>     -->
+	
+<!--   <node pkg="image_view" type="image_view" name="image_view" >
+    <remap from="image" to="/darknet_ros/detection_image"/>
+  </node> -->
+
 
 </launch>

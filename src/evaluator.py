@@ -34,7 +34,6 @@ class box_evaluator():
         self.srcimg_topic = rospy.get_param("~srcimg_topic","/ardrone/front/image_rect_color")
         self.srcimg_sub = rospy.Subscriber(self.srcimg_topic,Image,self.updateimage)
 
-        
         self.threat_img_topic = rospy.get_param("~threat_image_topic","/threats/potential_images")
         self.threat_img_pub = rospy.Publisher(self.threat_img_topic, ImageArray, queue_size=10)
 
@@ -87,6 +86,8 @@ class box_evaluator():
         x_bool = self.range_overlap(human_box["xmin"], human_box["xmax"], gun_box["xmin"], gun_box["xmax"])
         y_bool = self.range_overlap(human_box["ymin"], human_box["ymax"], gun_box["ymin"], gun_box["ymax"])
         return x_bool and y_bool
+
+
 
     def range_overlap(self, a_min, a_max, b_min, b_max):
         # Neither range is completely greater than the other
