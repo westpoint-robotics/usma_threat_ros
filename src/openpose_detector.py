@@ -52,9 +52,15 @@ class openpose_detector():
 		self.threat_model_name = rospy.get_param("~threat_model_name", "default_model")
 		self.threat_model_path = rospy.get_param("~threat_model_path")
 		self.threat_model_meta = self.threat_model_path + self.threat_model_name + ".meta"
-		print("openpose_detector::threat model = {}").format(self.threat_model_name)
-		print("openpose_detector::threat model path = {}").format(self.threat_model_path)
-		print("openpose_detector::threat model meta = {}").format(self.threat_model_meta)
+		# text params for writing threat labels
+		fontFace = cv2.FONT_HERSHEY_DUPLEX
+		text_color = (0,0,255)
+		fontScale = 1
+		text_thickness = 1
+		self.textSize = cv2.getTextSize(classification, fontFace, fontScale, text_thickness);
+		# print("openpose_detector::threat model = {}").format(self.threat_model_name)
+		# print("openpose_detector::threat model path = {}").format(self.threat_model_path)
+		# print("openpose_detector::threat model meta = {}").format(self.threat_model_meta)
 
 	def threat_boxes(self,msg):
 		if (self.msg_time != msg.header.stamp.to_sec()):
@@ -72,11 +78,13 @@ class openpose_detector():
 
 				self.datum.cvInputData = image
 				self.opWrapper.emplaceAndPop([self.datum])
-				self.publish_skeleton_image(self.datum.cvOutputData)
+				self.skeleton_image = self.datum.cvOutputData
+				self.process_skeletons(self.datum.poseKeypoints, self.skeleton_image)
+				self.publish_skeleton_image(self.skeleton_image)
 				i+=1
 
 				#do something with skeleton lists
-				self.process_skeletons(self.datum.poseKeypoints)
+				
 
 	def process_skeletons(self, skeleton_list):
 		x = np.empty((1,9,2))
@@ -95,7 +103,15 @@ class openpose_detector():
 						# reshape for input to FFNN
 						x = skele_x.reshape([1,skele_x.shape[0]*skele_x.shape[1]])
 						classification = self.prediction(x)
-						print("!! classification: {}").format(classification)
+						# print("!! classification: {}").format(classification)
+
+						text_width = textSize[0][0]
+						text_height = textSize[0][1]
+						text_baseline = textSize[1]
+						black_box_lower_left = (skele_image.shape[1]/2.0,skele_image.shape[0]/2.0)
+						black_box_upper_right = (black_box_lower_left[0]+text_width,black_box_lower_left[1]-text_height)
+						cv2.rectangle(self.skeleton_image,black_box_lower_left,black_box_upper_right,(0,0,0),-1)
+
 
 	def prediction(self, skele):
 		labels = ['high','med','low']
