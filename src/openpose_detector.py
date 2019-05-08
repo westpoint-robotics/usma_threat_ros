@@ -53,11 +53,11 @@ class openpose_detector():
 		self.threat_model_path = rospy.get_param("~threat_model_path")
 		self.threat_model_meta = self.threat_model_path + self.threat_model_name + ".meta"
 		# text params for writing threat labels
-		fontFace = cv2.FONT_HERSHEY_DUPLEX
-		text_color = (0,0,255)
-		fontScale = 1
-		text_thickness = 1
-		self.textSize = cv2.getTextSize(classification, fontFace, fontScale, text_thickness);
+		# fontFace = cv2.FONT_HERSHEY_DUPLEX
+		# text_color = (0,0,255)
+		# fontScale = 1
+		# text_thickness = 1
+		# self.textSize = cv2.getTextSize(classification, fontFace, fontScale, text_thickness);
 		# print("openpose_detector::threat model = {}").format(self.threat_model_name)
 		# print("openpose_detector::threat model path = {}").format(self.threat_model_path)
 		# print("openpose_detector::threat model meta = {}").format(self.threat_model_meta)
@@ -78,9 +78,9 @@ class openpose_detector():
 
 				self.datum.cvInputData = image
 				self.opWrapper.emplaceAndPop([self.datum])
-				self.skeleton_image = self.datum.cvOutputData
-				self.process_skeletons(self.datum.poseKeypoints, self.skeleton_image)
-				self.publish_skeleton_image(self.skeleton_image)
+				# self.skeleton_image = self.datum.cvOutputData
+				self.process_skeletons(self.datum.poseKeypoints)
+				self.publish_skeleton_image(self.datum.cvOutputData)
 				i+=1
 
 				#do something with skeleton lists
