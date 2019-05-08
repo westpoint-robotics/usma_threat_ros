@@ -1,12 +1,17 @@
 <launch>
-	<arg name="threat_image_topic" 	default="/threats/potential_images"/>
-	<arg name="model_folder_path"		default="$(find usma_threat_ros)/cfg/models/"/>
+	<arg name="threat_image_topic"		default="/threats/potential_images"/>
+	<arg name="model_folder_path"			default="$(find usma_threat_ros)/cfg/models/"/>
+	<arg name="skeleton_image_topic"	default="/threats/skeleton_images"/>
+	<arg name="threat_model_name"			default="basic_model"/>
+	<arg name="threat_model_path"			default="$(find usma_threat_ros)/threat_model/"/>
 	
 	<!-- Start the node to evaluate bounding boxes   -->
 	<node pkg="usma_threat_ros" type="openpose_detector.py" name="openpose_detector" output="screen" >
-		<param name="threat_images"				value="$(arg threat_image_topic)" />
-		<param name="model_folder_path"		value="$(arg model_folder_path)" />
-    <param name="test_string"					value="passed" />
+		<param name="threat_images"					value="$(arg threat_image_topic)" />
+		<param name="model_folder_path"			value="$(arg model_folder_path)" />
+		<param name="test_string"						value="passed" />
+		<param name="threat_model_name"			value="$(arg threat_model_name)" />
+		<param name="threat_model_path"			value="$(arg threat_model_path)" />
 	</node>
 
 	<include file="$(find stop)/launch/stop.launch">
@@ -19,22 +24,22 @@
 
 
 <!-- <launch> -->
-  <!-- Console launch prefix -->
-  <!-- <arg name="launch_prefix" default=""/> -->
+	<!-- Console launch prefix -->
+	<!-- <arg name="launch_prefix" default=""/> -->
 
-  <!-- Config and weights folder. -->
-  <!-- <arg name="yolo_weights_path"          default="$(find darknet_ros)/yolo_network_config/weights"/> -->
-  <!-- <arg name="yolo_config_path"           default="$(find darknet_ros)/yolo_network_config/cfg"/> -->
+	<!-- Config and weights folder. -->
+	<!-- <arg name="yolo_weights_path"          default="$(find darknet_ros)/yolo_network_config/weights"/> -->
+	<!-- <arg name="yolo_config_path"           default="$(find darknet_ros)/yolo_network_config/cfg"/> -->
 
-  <!-- Load parameters -->
-  <!-- <rosparam command="load" ns="darknet_ros" file="$(find darknet_ros)/config/ros.yaml"/> -->
-  <!-- <rosparam command="load" ns="darknet_ros" file="$(find darknet_ros)/config/yolov3-voc-test.yaml"/> -->
+	<!-- Load parameters -->
+	<!-- <rosparam command="load" ns="darknet_ros" file="$(find darknet_ros)/config/ros.yaml"/> -->
+	<!-- <rosparam command="load" ns="darknet_ros" file="$(find darknet_ros)/config/yolov3-voc-test.yaml"/> -->
 
-  <!-- Start darknet and ros wrapper -->
-  <!-- <node pkg="darknet_ros" type="darknet_ros" name="darknet_ros" output="screen" launch-prefix="$(arg launch_prefix)"> -->
-    <!-- <param name="weights_path"          value="$(arg yolo_weights_path)" /> -->
-    <!-- <param name="config_path"           value="$(arg yolo_config_path)" /> -->
-  <!-- </node> -->
+	<!-- Start darknet and ros wrapper -->
+	<!-- <node pkg="darknet_ros" type="darknet_ros" name="darknet_ros" output="screen" launch-prefix="$(arg launch_prefix)"> -->
+		<!-- <param name="weights_path"          value="$(arg yolo_weights_path)" /> -->
+		<!-- <param name="config_path"           value="$(arg yolo_config_path)" /> -->
+	<!-- </node> -->
 
 <!-- </launch> -->
 

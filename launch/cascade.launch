@@ -2,7 +2,8 @@
 	<arg name="boxes_topic"					default="/darknet_ros/bounding_boxes"/>
 	<arg name="srcimg_topic"				default="/pgr/image_color"/>
 	<!-- <arg name="srcimg_topic"				default="/ardrone/front/image_rect_color"/> -->
-	<arg name="threat_image_topic"	default="/threats/potential_images"/>
+	<arg name="threat_image_topic"		default="/threats/potential_images"/>
+	<arg name="skeleton_image_topic"	default="/threats/skeleton_images"/>
 
 	<include file="$(find stop)/launch/stop.launch">
 		<arg name="launcher"	value="evaluator_stopper" />
@@ -22,10 +23,15 @@
 
 	<!-- Start the node to calculate skeletons   -->
 	<include file="$(find usma_threat_ros)/launch/openpose.launch">
-		<arg name="threat_image_topic" 	value="$(arg threat_image_topic)" />
+		<arg name="threat_image_topic" 		value="$(arg threat_image_topic)" />
+		<arg name="skeleton_image_topic" 	value="$(arg skeleton_image_topic)" />
 	</include>
 
-	<node pkg="image_view" type="image_view" name="image_view" >
+	<node pkg="image_view" type="image_view" name="detection_image" >
 		<remap from="image" to="/darknet_ros/detection_image"/>
+	</node>
+
+	<node pkg="image_view" type="image_view" name="skeleton_images" >
+		<remap from="image" to="/threats/skeleton_images"/>
 	</node>
 </launch>

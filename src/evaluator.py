@@ -12,6 +12,16 @@ import time
 import tf
 
 class box_evaluator():
+	def box_overlap(self, human_box, gun_box):
+		# Overlapping rectangles overlap both horizontally & vertically
+		x_bool = self.range_overlap(human_box["xmin"], human_box["xmax"], gun_box["xmin"], gun_box["xmax"])
+		y_bool = self.range_overlap(human_box["ymin"], human_box["ymax"], gun_box["ymin"], gun_box["ymax"])
+		return x_bool and y_bool
+
+	def range_overlap(self, a_min, a_max, b_min, b_max):
+		# Neither range is completely greater than the other
+		return (a_min <= b_max) and (b_min <= a_max)
+
 	# Must have __init__(self) function for a class, similar to a C++ class constructor.
 	def __init__(self):
 		# ros config
@@ -75,21 +85,16 @@ class box_evaluator():
 				i = 0
 				for person_box in self.potential_threats:
 					# print("person_box[{}], xmin:[{}], xmax:[{}], ymin:[{}], ymax:[{}] ").format(i, person_box["xmin"], person_box["xmax"], person_box["ymin"], person_box["ymax"]) 
+					# if (person_box["ymin"]<person_box["ymax"]) and (person_box["xmin"]<person_box["xmax"]): 
 					crop_img = self.cv_image[person_box["ymin"]:person_box["ymax"],  person_box["xmin"]:person_box["xmax"]]
-					self.potential_threats_imgs.images.append(self.bridge.cv2_to_imgmsg(crop_img, "bgr8"))
-					i += 1
+					try: 
+						self.potential_threats_imgs.images.append(self.bridge.cv2_to_imgmsg(crop_img, "bgr8"))
+						i += 1
+					except CvBridgeError as e:
+						print(e)
 
 				self.threat_img_pub.publish(self.potential_threats_imgs)
 
-		def box_overlap(self, human_box, gun_box):
-				# Overlapping rectangles overlap both horizontally & vertically
-				x_bool = self.range_overlap(human_box["xmin"], human_box["xmax"], gun_box["xmin"], gun_box["xmax"])
-				y_bool = self.range_overlap(human_box["ymin"], human_box["ymax"], gun_box["ymin"], gun_box["ymax"])
-				return x_bool and y_bool
-
-		def range_overlap(self, a_min, a_max, b_min, b_max):
-				# Neither range is completely greater than the other
-				return (a_min <= b_max) and (b_min <= a_max)
 
 if __name__ == '__main__':
 		# Initialize the node and name it.
