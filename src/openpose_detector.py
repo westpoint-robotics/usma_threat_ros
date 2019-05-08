@@ -105,12 +105,12 @@ class openpose_detector():
 						classification = self.prediction(x)
 						# print("!! classification: {}").format(classification)
 
-						text_width = textSize[0][0]
-						text_height = textSize[0][1]
-						text_baseline = textSize[1]
-						black_box_lower_left = (skele_image.shape[1]/2.0,skele_image.shape[0]/2.0)
-						black_box_upper_right = (black_box_lower_left[0]+text_width,black_box_lower_left[1]-text_height)
-						cv2.rectangle(self.skeleton_image,black_box_lower_left,black_box_upper_right,(0,0,0),-1)
+						# text_width = textSize[0][0]
+						# text_height = textSize[0][1]
+						# text_baseline = textSize[1]
+						# black_box_lower_left = (skele_image.shape[1]/2.0,skele_image.shape[0]/2.0)
+						# black_box_upper_right = (black_box_lower_left[0]+text_width,black_box_lower_left[1]-text_height)
+						# cv2.rectangle(self.skeleton_image,black_box_lower_left,black_box_upper_right,(0,0,0),-1)
 
 
 	def prediction(self, skele):
