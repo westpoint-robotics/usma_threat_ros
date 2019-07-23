@@ -17,7 +17,7 @@ open <catkin_ws>/src/usma_threat_ros/yolo/pistol.data and change names to
 Required repos:
 =======
 
-	Darknet yolo: linkto.alexey.darknet
+	Darknet yolo: linkto.alexey.darknet : https://github.com/AlexeyAB/darknet
 
 ---
 Configurations:
@@ -25,6 +25,8 @@ Configurations:
 These changes must be made for the package to work:
 
 	echo "DARKNET_PATH=/path/to/your/darknet/installation" >> ~/.bashrc
+	echo "DARKNET_PATH=~/darknet" >> ~/.bashrc
+
 
 ---
 Testing a configuration:
