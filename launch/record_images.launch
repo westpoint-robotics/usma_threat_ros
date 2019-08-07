@@ -4,15 +4,14 @@
 		<arg name="launcher"	value="record_stopper" />
 	</include>
 
-	<include file="$(find usma_threat_ros)/launch/pgr_b.launch">
+	<include file="$(find usma_threat_ros)/launch/pgr.launch">
 		<arg name="camera_namespace"	value="pgr_1" />
-		<!-- <arg name="camera_serial"			value="16369570" /> -->
+		<arg name="camera_serial"			value="16369570" />
 	</include>
 
-<!-- 	<node pkg="image_view" type="image_view" name="pgr_1_image" >
-		<remap from="image" to="/pgr_1/image_raw"/>
-	</node>
- -->
-
+	<include file="$(find usma_threat_ros)/launch/pgr.launch">
+		<arg name="camera_namespace"	value="pgr_2" />
+		<arg name="camera_serial"			value="16369584" />
+	</include>
 	
 </launch>
