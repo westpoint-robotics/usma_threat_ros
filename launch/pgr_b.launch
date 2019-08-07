@@ -4,21 +4,22 @@
 
 <launch>
 <!-- load parameters -->
-	<arg name="camera_namespace"	default="pgr" />
-	<arg name="camera_serial"			default="16369570" />
-	<arg name="tf_id" 						default="/pgr/$(arg camera_serial)" />
-	<arg name="camera_yaml"				default="$(env HOME)/.ros/camera_info/$(arg camera_serial).yaml" />
-	<!-- <arg name="camera_yaml"				default="$(find usma_threat_ros)/cfg/camera_info/$(arg camera_serial).yaml" /> -->
+	<arg name="camera_namespace" default="pgr" />
+	<arg name="left_camera_serial" default="16369570" />
+	<arg name="left_tf_id" default="/pgr/$(arg left_camera_serial)" />
+	<arg name="left_camera_yaml" default="$(env HOME)/.ros/camera_info/$(arg left_camera_serial).yaml" />
 
 <!--  camera driver  -->
 	<group ns="$(arg camera_namespace)" >
-			<node pkg="nodelet" type="nodelet" name="nodelet_manager" args="manager" />
-			<node pkg="nodelet" type="nodelet" name="nodelet" args="load pointgrey_camera_driver/PointGreyCameraNodelet nodelet_manager">
-				<rosparam file="$(arg camera_yaml)" />
-				<param name="frame_id"				value="$(arg camera_namespace)" />
-				<param name="serial" 					value="$(arg camera_serial)" />
-				<!-- <param name="camera_info_url"	value="$(arg camera_serial)" /> -->
+			<node pkg="nodelet" type="nodelet" name="left_nodelet_manager" args="manager" />
+			<node pkg="nodelet" type="nodelet" name="left_nodelet" args="load pointgrey_camera_driver/PointGreyCameraNodelet left_nodelet_manager">
+				<param name="frame_id" value="left" />
+				<param name="serial" value="$(arg left_camera_serial)" />
+				<rosparam file="$(arg left_camera_yaml)" />
 			</node>
-			<!-- <node pkg="image_proc" type="image_proc" name="image_proc_$(arg camera_serial)" /> -->
+			<node pkg="image_proc" type="image_proc" name="image_proc" />
 	</group>
+  <!-- <node pkg="image_view" type="image_view" name="image_view" > -->
+    <!-- <remap from="image" to="/pgr/image_color"/> -->
+  <!-- </node> -->
 </launch>
