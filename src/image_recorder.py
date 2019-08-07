@@ -17,7 +17,9 @@ class image_recorder():
 	def __init__(self):
 		# Ros params
 		self.bridge = CvBridge()
-		
+		self.record_frame_rate = rospy.get_param("~frame_rate",1)
+		self.save_frame_rate = rospy.Rate(self.record_frame_rate) # rospy.Rate(30) # 30hz
+
 		self.image_topic = rospy.get_param("~image_topic","/pgr_1/image_raw")
 		self.image_sub = rospy.Subscriber(self.image_topic,Image,self.record_ros_image)
 		self.image_seq = 0
@@ -35,20 +37,14 @@ class image_recorder():
 			print(e)
 
 		image_filename = ("{}/{}_{:06d}.png").format(self.folder_path, self.camera_namespace, self.image_seq)
-		# print("saving image: {}").format(image_filename)
-		# image_gray = cv2.cvtColor(cv_image, cv2.COLOR_BGR2GRAY)
-		# cv2.imshow(self.camera_namespace, cv_image)
-		# cv2.waitKey(1)
+		print("saving image: {}").format(image_filename)
 		try: 
 			check = cv2.imwrite(image_filename, cv_image)
-			# check = cv2.imwrite("/home/benjamin/ros/data/pgr_1_{:06d}.png".format(self.image_seq), cv_image)
 		except cv2.error as e:
 			print(e)
 
-		# cv2.destroyAllWindows()
-		# print("imwrite successful: {}").format(check)
 		self.image_seq += 1
-
+		self.save_frame_rate.sleep() # regulate the frame rate of the saving process
 		
 
 
