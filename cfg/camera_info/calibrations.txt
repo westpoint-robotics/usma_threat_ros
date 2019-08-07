@@ -1,3 +1,10 @@
+roscd usma_threat_ros/cfg/camera_info
+rosrun camera_calibration_parsers convert pgr_1.ini pgr_1.yml
+rosrun camera_calibration_parsers convert pgr_2.ini pgr_2.yml
+rosrun camera_calibration_parsers convert ardrone_front.ini ardrone_front.yml
+
+
+~~~~~~~~~~~~~~~~~~~~~~~
 ('D = ', [-0.319450239998368, 0.08892782580095888, -0.0020570638829944974, 0.0011528156622170873, 0.0])
 ('K = ', [735.3989072696169, 0.0, 648.3511605974144, 0.0, 730.684680549986, 477.88323166026134, 0.0, 0.0, 1.0])
 ('R = ', [1.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 1.0])
@@ -14,7 +21,7 @@ width
 height
 964
 
-[narrow_stereo]
+[pgr_1]
 
 camera matrix
 735.398907 0.000000 648.351161
@@ -91,7 +98,7 @@ width
 height
 964
 
-[narrow_stereo]
+[pgr_2]
 
 camera matrix
 780.563267 0.000000 636.554912
@@ -169,7 +176,7 @@ width
 height
 360
 
-[narrow_stereo]
+[ardrone_front]
 
 camera matrix
 571.839731 0.000000 320.087671

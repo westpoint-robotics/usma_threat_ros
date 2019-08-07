@@ -18,5 +18,3 @@ projection_matrix:
   rows: 3
   cols: 4
   data: [576.496765, 0, 631.870599, 0, 0, 660.024658, 460.143699, 0, 0, 0, 1, 0]
-
-distortion_model: plumb_bob
