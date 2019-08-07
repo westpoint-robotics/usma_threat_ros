@@ -1,0 +1,18 @@
+<launch>
+
+	<include file="$(find stop)/launch/stop.launch">
+		<arg name="launcher"	value="record_stopper" />
+	</include>
+
+	<include file="$(find usma_threat_ros)/launch/pgr.launch">
+		<arg name="camera_namespace"	value="pgr_1" />
+		<arg name="camera_serial"			value="16369570" />
+	</include>
+
+	<node pkg="image_view" type="image_view" name="pgr_1_image" >
+		<remap from="image" to="/pgr_1/image_raw"/>
+	</node>
+
+
+	
+</launch>
