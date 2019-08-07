@@ -1,9 +1,10 @@
 <launch>
-	<arg name="date"						default="threat_images"/>
+	<arg name="date"							default="threat_images"/>
+	<arg name="record"						default="1"/>
 	<arg name="record_frame_rate"	default="5"/>
 
 	<!-- PGR camera #1 -->
-<!-- 		<include file="$(find usma_threat_ros)/launch/pgr.launch">
+		<include file="$(find usma_threat_ros)/launch/pgr.launch">
 			<arg name="camera_namespace"	value="pgr_1" />
 			<arg name="camera_serial"			value="16369570" />
 			<arg name="calibrated"				value="0" />
@@ -14,10 +15,10 @@
 			<param name="image_topic"				value="/pgr_1/image_raw"/>
 			<param name="camera_namespace"	value="pgr_1"/>
 			<param name="frame_rate"				value="$(arg record_frame_rate)" />
-		</node> -->
+		</node>
 
 	<!-- PGR camera #2 -->
-<!-- 		<include file="$(find usma_threat_ros)/launch/pgr.launch">
+		<include file="$(find usma_threat_ros)/launch/pgr.launch">
 			<arg name="camera_namespace"	value="pgr_2" />
 			<arg name="camera_serial"			value="16369584" />
 			<arg name="calibrated"				value="0" />
@@ -28,7 +29,7 @@
 			<param name="image_topic"				value="/pgr_2/image_raw"/>
 			<param name="camera_namespace"	value="pgr_2"/>
 			<param name="frame_rate"				value="$(arg record_frame_rate)" />
-		</node> -->
+		</node>
 
 	<!-- Ar.Drone Recorder -->
 		<arg name="ardrone_ip"	default="192.168.0.25" /> 
@@ -38,6 +39,7 @@
 			<arg name="echo"				value="false" />
 			<arg name="cmd_topic"		value="ardrone/switched/cmd_vel"/>
 		</include>
+
 		<node pkg="usma_threat_ros" type="image_recorder.py" name="ardrone_recorder" output="screen">
 			<param name="folder_path"				value="$(env HOME)/ros/data/threat_images/ardrone"/>
 			<param name="image_topic"				value="/ardrone/front/image_raw"/>
