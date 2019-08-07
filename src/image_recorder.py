@@ -26,20 +26,30 @@ class image_recorder():
 		self.camera_namespace = rospy.get_param("~camera_namespace","pgr_1")
 		self.folder_path = rospy.get_param("~folder_path","/")
 
-		print("Saving {} images to: {}").format(self.camera_namespace, self.folder_path)
+		print("Saving images to: {}").format(self.folder_path)
 
 	def record_ros_image(self,msg):
 		try:
-			self.cv_image = self.bridge.imgmsg_to_cv2(msg, "bgr8")
-			image_filename = ("saving image: {}/{}_{:06d}.png").format(self.folder_path, self.camera_namespace, self.image_seq)
-			print("{}").format(image_filename)
-			cv2.imwrite(image_filename,self.cv_image)
-			# bool check = cv2.imwrite("./img.bmp", reflection);
-
-			self.image_seq += 1
+			cv_image = self.bridge.imgmsg_to_cv2(msg, "bgr8")
 		except CvBridgeError as e:
 			print(e)
 
+		image_filename = ("{}/{}_{:06d}.png").format(self.folder_path, self.camera_namespace, self.image_seq)
+		# print("saving image: {}").format(image_filename)
+		# image_gray = cv2.cvtColor(cv_image, cv2.COLOR_BGR2GRAY)
+		# cv2.imshow(self.camera_namespace, cv_image)
+		# cv2.waitKey(1)
+		try: 
+			check = cv2.imwrite(image_filename, cv_image)
+			# check = cv2.imwrite("/home/benjamin/ros/data/pgr_1_{:06d}.png".format(self.image_seq), cv_image)
+		except cv2.error as e:
+			print(e)
+
+		# cv2.destroyAllWindows()
+		# print("imwrite successful: {}").format(check)
+		self.image_seq += 1
+
+		
 
 
 if __name__ == '__main__':

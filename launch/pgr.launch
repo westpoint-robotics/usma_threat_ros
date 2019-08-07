@@ -18,8 +18,8 @@
 			</node>
 			<node pkg="image_proc" type="image_proc" name="image_proc" />
 	</group>
-	<node pkg="image_view" type="image_view" name="$(arg camera_namespace)_image_view" >
+	<!-- <node pkg="image_view" type="image_view" name="$(arg camera_namespace)_image_view" > -->
 		<remap from="image" to="/$(arg camera_namespace)/image_raw"/>
-	</node>
+	<!-- </node> -->
 </launch>
 
