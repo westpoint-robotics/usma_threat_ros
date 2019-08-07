@@ -1,19 +1,38 @@
 <launch>
+	<arg name="date"						default="20190807"/>
+	<arg name="pgr_frame_rate"	default="5"/>
 
-	<include file="$(find stop)/launch/stop.launch">
-		<arg name="launcher"	value="record_stopper" />
-	</include>
+	<!-- PGR camera #1 -->
+		<include file="$(find usma_threat_ros)/launch/pgr.launch">
+			<arg name="camera_namespace"	value="pgr_1" />
+			<arg name="camera_serial"			value="16369570" />
+			<arg name="calibrated"				value="0" />
+			<arg name="frame_rate"				value="$(arg pgr_frame_rate)" />
+		</include>
 
-	<include file="$(find usma_threat_ros)/launch/pgr.launch">
-		<arg name="camera_namespace"	value="pgr_1" />
-		<arg name="camera_serial"			value="16369570" />
-		<arg name="calibrated"				value="0" />
-	</include>
+		<node pkg="usma_threat_ros" type="image_recorder.py" name="pgr_1_recorder" output="screen">
+			<param name="folder_path"				value="$(env HOME)/ros/data/$(arg date)/pgr_1"/>
+			<param name="image_topic"				value="/pgr_1/image_raw"/>
+			<param name="camera_namespace"	value="pgr_1"/>
+		</node>
 
-	<include file="$(find usma_threat_ros)/launch/pgr.launch">
-		<arg name="camera_namespace"	value="pgr_2" />
-		<arg name="camera_serial"			value="16369584" />
-		<arg name="calibrated"				value="0" />
-	</include>
-	
+	<!-- PGR camera #1 -->
+		<include file="$(find usma_threat_ros)/launch/pgr.launch">
+			<arg name="camera_namespace"	value="pgr_2" />
+			<arg name="camera_serial"			value="16369584" />
+			<arg name="calibrated"				value="0" />
+			<arg name="frame_rate"				value="$(arg pgr_frame_rate)" />
+		</include>
+
+		<node pkg="usma_threat_ros" type="image_recorder.py" name="pgr_2_recorder" output="screen">
+			<param name="folder_path"				value="$(env HOME)/ros/data/$(arg date)/pgr_2"/>
+			<param name="image_topic"				value="/pgr_2/image_raw"/>
+			<param name="camera_namespace"	value="pgr_2"/>
+		</node>
+
+	<!-- keyboard stopper -->
+		<include file="$(find stop)/launch/stop.launch">
+			<arg name="launcher"	value="record_stopper" />
+		</include>
+
 </launch>

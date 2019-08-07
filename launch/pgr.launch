@@ -3,6 +3,7 @@
 <!-- load parameters -->
 	<arg name="camera_namespace"		default="pgr" />
 	<arg name="calibrated"					default="0" />
+	<arg name="frame_rate"					default="10" />
 	<arg name="camera_serial"				default="16369570" />
 	<arg name="camera_yaml"					default="$(find usma_threat_ros)/camera_info/$(arg camera_serial).yaml" />
 
@@ -10,12 +11,12 @@
 	<group ns="$(arg camera_namespace)" >
 			<node pkg="nodelet" type="nodelet" name="$(arg camera_namespace)_nodelet_manager"	args="manager" />
 			<node pkg="nodelet" type="nodelet" name="$(arg camera_namespace)_nodelet"					args="load pointgrey_camera_driver/PointGreyCameraNodelet $(arg camera_namespace)_nodelet_manager">
-				<param name="frame_id"	value="$(arg camera_namespace)" />
-				<param name="serial"		value="$(arg camera_serial)" />
+				<param name="frame_id"		value="$(arg camera_namespace)" />
+				<param name="serial"			value="$(arg camera_serial)" />
+				<param name="frame_rate"	value="$(arg frame_rate)" />
 				<param name="camera_info_url" if="$(arg calibrated)" value="file://$(arg camera_yaml)" />
 			</node>
 			<node pkg="image_proc" type="image_proc" name="image_proc" />
-			<!-- <node pkg="nodelet" type="nodelet" name="image_proc_debayer" args="load image_proc/debayer camera_nodelet_manager"/> -->
 	</group>
 	<node pkg="image_view" type="image_view" name="$(arg camera_namespace)_image_view" >
 		<remap from="image" to="/$(arg camera_namespace)/image_raw"/>
