@@ -2,7 +2,7 @@
 <launch>
 <!-- load parameters -->
 	<arg name="camera_namespace"		default="pgr" />
-	<arg name="calibrated"					default="1" />
+	<arg name="calibrated"					default="0" />
 	<arg name="camera_serial"				default="16369570" />
 	<arg name="camera_yaml"					default="$(find usma_threat_ros)/camera_info/$(arg camera_serial).yaml" />
 
