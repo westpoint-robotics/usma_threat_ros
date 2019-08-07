@@ -16,8 +16,8 @@
 			<param name="camera_namespace"	value="pgr_1"/>
 		</node>
 
-	<!-- PGR camera #1 -->
-		<include file="$(find usma_threat_ros)/launch/pgr.launch">
+	<!-- PGR camera #2 -->
+<!-- 		<include file="$(find usma_threat_ros)/launch/pgr.launch">
 			<arg name="camera_namespace"	value="pgr_2" />
 			<arg name="camera_serial"			value="16369584" />
 			<arg name="calibrated"				value="0" />
@@ -28,7 +28,7 @@
 			<param name="folder_path"				value="$(env HOME)/ros/data/$(arg date)/pgr_2"/>
 			<param name="image_topic"				value="/pgr_2/image_raw"/>
 			<param name="camera_namespace"	value="pgr_2"/>
-		</node>
+		</node> -->
 
 	<!-- keyboard stopper -->
 		<include file="$(find stop)/launch/stop.launch">

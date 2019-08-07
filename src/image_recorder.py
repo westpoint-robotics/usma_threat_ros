@@ -25,14 +25,17 @@ class image_recorder():
 
 		self.camera_namespace = rospy.get_param("~camera_namespace","pgr_1")
 		self.folder_path = rospy.get_param("~folder_path","/")
+
 		print("Saving {} images to: {}").format(self.camera_namespace, self.folder_path)
 
 	def record_ros_image(self,msg):
 		try:
 			self.cv_image = self.bridge.imgmsg_to_cv2(msg, "bgr8")
-			print("saving image: {}/{}_{:06d}.jpg").format(self.folder_path, self.camera_namespace, self.image_seq)
-			
-			# cv2.imwrite('messigray.png',img)
+			image_filename = ("saving image: {}/{}_{:06d}.png").format(self.folder_path, self.camera_namespace, self.image_seq)
+			print("{}").format(image_filename)
+			cv2.imwrite(image_filename,self.cv_image)
+			# bool check = cv2.imwrite("./img.bmp", reflection);
+
 			self.image_seq += 1
 		except CvBridgeError as e:
 			print(e)
