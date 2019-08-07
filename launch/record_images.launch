@@ -30,6 +30,14 @@
 			<param name="camera_namespace"	value="pgr_2"/>
 		</node> -->
 
+	<!-- Ar.Drone Recorder -->
+		<arg name="ardrone_ip" default="192.168.0.25" /> <!-- need to check IP address each time -->
+    <include file="$(find optitrack_controller)/launch/ardrone_driver_$(arg network).launch">
+        <arg name="ip"          value="$(arg ardrone_ip)"/>
+        <arg name="echo"        value="false" />
+        <arg name="cmd_topic"   value="ardrone/switched/cmd_vel"/>
+    </include>
+
 	<!-- keyboard stopper -->
 		<include file="$(find stop)/launch/stop.launch">
 			<arg name="launcher"	value="record_stopper" />
