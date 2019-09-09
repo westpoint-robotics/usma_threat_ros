@@ -17,6 +17,10 @@ import yaml
 sys.path.append('/usr/local/python') # path for CMUopenpose library
 sys.path.append(os.environ['DARKNET_PATH']) 
 sys.path.append(os.environ['DARKNET_PATH']+'/python')
+
+print("sys.path.append({}) ").format(os.environ['DARKNET_PATH'])
+print("sys.path.append({}) ").format(os.environ['DARKNET_PATH']+'/python')
+
 import darknet as dn
 
 class yolo_darknet():

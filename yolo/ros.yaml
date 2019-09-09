@@ -8,8 +8,8 @@ darknet_yolo:
 subscribers:
   image:
     # topic: /logitech/image_raw
-    topic: /pgr/image_color
-    # topic: /ardrone/front/image_rect_color
+    # topic: /pgr/image_color
+    topic: /ardrone/front/image_rect_color
 
 publishers:
   bounding_boxes:
