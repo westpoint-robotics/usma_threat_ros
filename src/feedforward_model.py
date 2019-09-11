@@ -29,6 +29,7 @@ class feedforward(object):
                  train_keep_prob=[.7], activation=tf.nn.relu):
         # Ensures that the hidden layers have corresponding keep probs
         assert(len(hidden_layer_size) == len(train_keep_prob))
+        tf.reset_default_graph()
 
         # Sets variables for later use
         self.input_size = input_size

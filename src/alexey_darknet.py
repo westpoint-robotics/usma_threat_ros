@@ -44,6 +44,12 @@ class yolo_darknet():
 		self.bb_image_pub = rospy.Publisher(self.bb_image_pub_topic, Image, queue_size=10)
 		self.bb_image_seq = 0
 
+		# params for adding text to bounding boxes
+		self.fontFace = cv2.FONT_HERSHEY_DUPLEX
+		self.fontScale = 0.5
+		self.text_thickness = 1
+		self.box_thickness = 2
+
 		self.bounding_boxes_msg = BoundingBoxes()
 		self.bounding_boxes_msg_seq = 0
 		self.bounding_boxes_topic = rospy.get_param("~publishers/bounding_boxes/topic")
@@ -72,8 +78,10 @@ class yolo_darknet():
 		for detection in self.detections:
 			if (detection[0] == "pistol"):
 				box_color = (255,0,0)
-			if (detection[0] == "person"):
+			elif (detection[0] == "person"):
 				box_color = (0,0,255)
+			else:
+				box_color = (0,255,0)
 
 			box = BoundingBox()
 			box.Class = detection[0]
@@ -84,15 +92,33 @@ class yolo_darknet():
 			box.xmax = (bounds[0] + bounds[2]/2)
 			box.ymax = (bounds[1] + bounds[3]/2)
 			cv2.rectangle(frame_resized,(int(box.xmin),int(box.ymin)),(int(box.xmax),int(box.ymax)),box_color,2)
+			frame_resized = self.add_label_to_box(detection[0], box, box_color, frame_resized)
+
 			box.xmin *= width_scale
 			box.ymin *= height_scale
 			box.xmax *= width_scale
 			box.ymax *= height_scale
 			self.bounding_boxes_msg.bounding_box.append(box)
+			
 
 		self.publish_boxes_array()
 		# this publishes the image with bounding boxes
 		self.publish_image_with_boxes(cv2.resize(frame_resized,(self.cv_image.shape[1], self.cv_image.shape[0]),interpolation=cv2.INTER_LINEAR)	)
+
+	def add_label_to_box(self, label, box, text_color, cv_image):
+		textSize = cv2.getTextSize(label, self.fontFace, self.fontScale, self.text_thickness);
+		text_width = textSize[0][0]
+		text_height = textSize[0][1]
+		text_baseline = textSize[1]
+
+		black_box_lower_left = (int(box.xmin) + self.box_thickness,  int(box.ymin) + text_height + text_baseline + self.box_thickness)
+		black_box_upper_right = (int(box.xmin) + self.box_thickness + text_width,  int(box.ymin)+self.box_thickness)
+		cv2.rectangle(cv_image,black_box_lower_left,black_box_upper_right,(0,0,0),-1)
+
+		text_lower_left = (int(box.xmin) + self.box_thickness,  int(box.ymin) + text_height+self.box_thickness)
+		text_upper_right = (int(box.xmin) + self.box_thickness+text_width,  int(box.ymin) + self.box_thickness)
+		cv2.putText(cv_image, label, text_lower_left, self.fontFace, self.fontScale, text_color, self.text_thickness,cv2.LINE_AA)
+		return cv_image
 
 	def publish_boxes_array(self):
 		self.bounding_boxes_msg.header.stamp = rospy.Time.now()
